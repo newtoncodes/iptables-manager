@@ -31,6 +31,12 @@ const options = {
         type: 'string',
         choices: [
             'all',
+            
+            'output-all',
+            'output-ping',
+            'output-ssh',
+            'output-http',
+            
             'input-all',
             'input-ping',
             'input-ssh',
@@ -61,7 +67,7 @@ const commands = {
     },
     tpl: {
         command: 'tpl <rule> <tpl>',
-        description: 'Add a rule from a template file.',
+        description: 'Add a rule from a template.',
         
         builder: (yargs) => yargs
             .positional('rule', options.rule)
