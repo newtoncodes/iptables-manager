@@ -1,2 +1,3 @@
-# iptables-manager
+# IPtables manager
+
 Manage iptables easier

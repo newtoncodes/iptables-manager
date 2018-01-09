@@ -1,0 +1,13 @@
+{
+  "name": "iptables-manager",
+  "version": "1.0.0",
+  "dependencies": {
+    "yargs": "=10.0.3"
+  },
+  "scripts": {},
+  "bin": {
+    "iptables-manager": "node ./bin/app.js",
+    "firewall": "node ./bin/app.js",
+    "ipm": "node ./bin/app.js"
+  }
+}
