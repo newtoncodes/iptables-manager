@@ -113,6 +113,7 @@ yargs
     .usage('Easy to use iptables management.\n\nUsage: $0 <cmd> <args ...>')
     .demandCommand(1, 1, 'You must specify a command.', 'You must specify max one command.')
     .command(commands['add'])
+    .command(commands['tpl'])
     .command(commands['remove'])
     .command(commands['run'])
     .command(commands['reload'])
