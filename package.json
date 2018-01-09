@@ -2,6 +2,7 @@
   "name": "iptables-manager",
   "version": "1.0.0",
   "dependencies": {
+    "read-input": "^0.3.1",
     "yargs": "=10.0.3"
   },
   "scripts": {},

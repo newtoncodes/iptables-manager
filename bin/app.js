@@ -32,16 +32,13 @@ const options = {
         choices: [
             'all',
             
-            'output-all',
-            'output-ping',
-            'output-ssh',
-            'output-http',
-            
-            'input-all',
-            'input-ping',
-            'input-ssh',
-            'input-http',
-            'input-docker-swarm'
+            'serve-dns',
+            'serve-ping',
+            'serve-ssh',
+            'serve-http',
+    
+            'input-allow-port',
+            'input-deny-port',
         ]
     },
     
@@ -62,7 +59,7 @@ const commands = {
             .positional('file', options.file),
         
         handler: (argv) => {
-            add(argv.rule, argv.tpl);
+            add(argv.rule, argv.tpl, () => process.exit());
         }
     },
     tpl: {
@@ -74,7 +71,7 @@ const commands = {
             .positional('tpl', options.tpl),
         
         handler: (argv) => {
-            tpl(argv.rule, argv.tpl);
+            tpl(argv.rule, argv.tpl, () => process.exit());
         }
     },
     remove: {
@@ -86,6 +83,7 @@ const commands = {
     
         handler: (argv) => {
             remove(argv.rule);
+            process.exit();
         }
     },
     run: {
