@@ -21,7 +21,9 @@ const add = (rule, content) => {
     
     try {
         if (!exists(PATH + '/rules/')) mkdir(PATH + '/rules');
-        writeFile(PATH + '/rules/' + rule, content, 'utf8');
+        writeFile(PATH + '/rules/' + rule, '#!/bin/bash\n\n' + content.trim() + '\n', 'utf8');
+        
+        console.log('\nRules written to file: ' + PATH + '/rules/' + rule);
     } catch (e) {
         console.error(`Could not write to file: ${PATH + '/rules/' + rule}`);
         process.exit(1);

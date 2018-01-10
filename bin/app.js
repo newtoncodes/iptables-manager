@@ -30,15 +30,15 @@ const options = {
         description: 'Template name.',
         type: 'string',
         choices: [
-            'all',
-            
-            'serve-dns',
-            'serve-ping',
-            'serve-ssh',
-            'serve-http',
-    
-            'input-allow-port',
-            'input-deny-port',
+            'input',
+            'input-all',
+            'input-dns',
+            'input-http',
+            'input-ping',
+            'input-ssh',
+            'input-ssh-vpn',
+            'output',
+            'output-all'
         ]
     },
     

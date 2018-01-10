@@ -110,12 +110,4 @@ let tpl = async (ask) => {
 }
 
 
-const readline = require('readline');
-const rl = readline.rli || readline.createInterface({input: process.stdin, output: process.stdout});
-readline.rli = rl;
-const ask = require('util').promisify((q, c) => rl.question(q, a => c(null, a)));
-
-tpl(ask).then(s => console.log(s)).catch(e => console.error('Error: ' + e.message));
-
-
 module.exports = tpl;
