@@ -33,6 +33,11 @@ After you setup your ssh rules, you must delete the all-default rule.
 ```bash
 sudo ipm remove all-default
 ```
+Another rule will be created by default on install: `output-all`. It allows all outgoing traffic. That's the default setting for most servers.
+If you want to remove it:
+```bash
+sudo ipm remove output-all
+```
 
 ## Usage
 

@@ -51,4 +51,13 @@ iptables -A INPUT  -j ACCEPT
 iptables -A OUTPUT -j ACCEPT
 " > /etc/iptables-manager/rules/all-default
 
+sudo echo "#!/bin/bash
+
+# Allow all outgoing traffic
+
+iptables -A OUTPUT -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT  -m state --state ESTABLISHED     -j ACCEPT
+" > /etc/iptables-manager/rules/output-all
+
+
 echo "All done."
