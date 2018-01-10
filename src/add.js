@@ -8,6 +8,7 @@ const writeFile = require('fs').writeFileSync;
 const readline = require('readline');
 const rl = readline.rli || readline.createInterface({input: process.stdin, output: process.stdout});
 readline.rli = rl;
+const ask = require('util').promisify((q, c) => rl.question(q, a => c(null, a)));
 
 const PATH = __dirname + '/../config';
 
@@ -72,14 +73,12 @@ module.exports = {
         
         let fn = require('./tpl/' + tpl + '.js');
         
-        fn(rl, (error, content) => {
-            if (error) {
-                console.error(error.message);
-                process.exit(1);
-            }
-            
+        fn(ask).then(content => {
             add(rule, content);
             callback && callback();
+        }).catch(error => {
+            console.error(error.message);
+            process.exit(1);
         });
     }
 };
