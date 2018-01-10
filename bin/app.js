@@ -59,7 +59,7 @@ const commands = {
             .positional('file', options.file),
         
         handler: (argv) => {
-            add(argv.rule, argv.tpl, () => process.exit());
+            add(argv.rule, argv.file, () => process.exit());
         }
     },
     tpl: {

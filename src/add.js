@@ -1,14 +1,12 @@
 'use strict';
 
-const read = require('read-input').stdin;
+const read = require('read-input');
+const exec = require('child_process').execSync;
 const mkdir = require('fs').mkdirSync;
 const exists = require('fs').existsSync;
 const readFile = require('fs').readFileSync;
 const writeFile = require('fs').writeFileSync;
 const readline = require('readline');
-const rl = readline.rli || readline.createInterface({input: process.stdin, output: process.stdout});
-readline.rli = rl;
-const ask = require('util').promisify((q, c) => rl.question(q, a => c(null, a)));
 
 const PATH = __dirname + '/../config';
 
@@ -21,14 +19,16 @@ const add = (rule, content) => {
     
     try {
         if (!exists(PATH + '/rules/')) mkdir(PATH + '/rules');
-        writeFile(PATH + '/rules/' + rule, '#!/bin/bash\n\n' + content.trim() + '\n', 'utf8');
+        writeFile(PATH + '/rules/' + rule, content.trim() + '\n', 'utf8');
+        exec('chmod 600 ' + PATH + '/rules/' + rule, {stdio: 'inherit'});
         
         console.log('\nRules written to file: ' + PATH + '/rules/' + rule);
     } catch (e) {
         console.error(`Could not write to file: ${PATH + '/rules/' + rule}`);
+        console.error(e.message);
         process.exit(1);
     }
-}
+};
 
 module.exports = {
     add: (rule, file, callback) => {
@@ -41,7 +41,7 @@ module.exports = {
             let content = '';
             
             try {
-                content = readFile(file);
+                content = readFile(file, 'utf8');
             } catch (e) {
                 console.error('Cannot read file: ' + file);
                 process.exit(1);
@@ -51,13 +51,13 @@ module.exports = {
             return callback && callback();
         }
         
-        read((error, content) => {
+        read([], (error, content) => {
             if (error) {
                 console.error(error.message);
                 process.exit(1);
             }
             
-            add(rule, content);
+            add(rule, content.data);
             callback && callback();
         });
     },
@@ -74,9 +74,12 @@ module.exports = {
         }
         
         let fn = require('./tpl/' + tpl + '.js');
+    
+        readline.rli = readline.rli || readline.createInterface({input: process.stdin, output: process.stdout});
+        const ask = require('util').promisify((q, c) => readline.rli.question(q, a => c(null, a)));
         
         fn(ask).then(content => {
-            add(rule, content);
+            add(rule, '#!/bin/bash\n\n' + content.trim());
             callback && callback();
         }).catch(error => {
             console.error(error.message);
