@@ -2,8 +2,9 @@
 
 set -e
 
-dir=$(dirname "$0")
-
-PATH_CONFIG=/etc/iptables-manager
-
-sudo update-rc.d -f iptables-manager remove
+res=$(which chkconfig)
+if [ "$res" != "" ]; then
+    sudo chkconfig --del iptables-manager
+else
+    sudo update-rc.d -f iptables-manager remove
+fi

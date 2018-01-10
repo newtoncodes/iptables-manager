@@ -4,10 +4,9 @@ set -e
 
 dir=$(dirname "$0")
 
-PATH_CONFIG=/etc/iptables-manager
-
 sudo cp -f ${dir}/init.sh /etc/init.d/iptables-manager
 sudo chmod +x /etc/init.d/iptables-manager
+sudo mkdir -p /etc/iptables-manager
 
 res=$(which chkconfig)
 if [ "$res" != "" ]; then
@@ -17,11 +16,11 @@ else
     sudo update-rc.d iptables-manager defaults
 fi
 
-if [ ! -d ${PATH_CONFIG} ]; then
-    sudo mkdir -p ${PATH_CONFIG}
+if [ ! -d /etc/iptables-manager ]; then
+    sudo mkdir -p /etc/iptables-manager
 fi
 
-if [ -f ${PATH_CONFIG}/vars.env ]; then
+if [ -f /etc/iptables-manager/vars.env ]; then
     exit 0;
 fi
 
@@ -31,6 +30,6 @@ POLICY_OUTPUT=DROP
 POLICY_FORWARD=DROP
 
 LOG_SPAM=1
-" > ${PATH_CONFIG}/vars.env
+" > /etc/iptables-manager/vars.env
 
-sudo mkdir -p ${PATH_CONFIG}/rules
+sudo mkdir -p /etc/iptables-manager/rules
