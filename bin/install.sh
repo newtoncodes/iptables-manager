@@ -8,7 +8,12 @@ sudo cp -f ${dir}/init.sh /etc/init.d/iptables-manager
 sudo chmod +x /etc/init.d/iptables-manager
 sudo mkdir -p /etc/iptables-manager
 
+set +e
+
 res=$(which chkconfig)
+
+set -e
+
 if [ "$res" != "" ]; then
     sudo chkconfig --add myscript
     sudo chkconfig --level 2345 myscript on
