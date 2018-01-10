@@ -3,8 +3,10 @@
 'use strict';
 
 const yargs = require('yargs');
+const exec = require('child_process').execSync;
 const exists = require('fs').existsSync;
 const access = require('fs').accessSync;
+const readdir = require('fs').readdirSync;
 const W_OK = require('fs').W_OK;
 
 const add = require('../src/add').add;
@@ -137,6 +139,60 @@ const commands = {
             process.exit();
         }
     },
+    edit: {
+        command: 'edit',
+        description: 'Edit a rule script with nano.',
+        
+        builder: (yargs) => yargs,
+        
+        handler: (yargs) => {
+            checkRoot();
+            checkInstall();
+            exec('nano /etc/iptables-manager/' + yargs.rule, {stdio: 'inherit'});
+            process.exit();
+        }
+    },
+    get: {
+        command: 'get',
+        description: 'Show a rule script.',
+        
+        builder: (yargs) => yargs,
+        
+        handler: (yargs) => {
+            checkRoot();
+            checkInstall();
+            exec('cat /etc/iptables-manager/' + yargs.rule, {stdio: 'inherit'});
+            process.exit();
+        }
+    },
+    list: {
+        command: 'list',
+        description: 'List all rules.',
+        
+        builder: (yargs) => yargs,
+        
+        handler: () => {
+            checkRoot();
+            checkInstall();
+    
+            let files = readdir('/etc/iptables-manager/rules');
+            let rules = [];
+            for (let file of files) {
+                file = file.split('/');
+                file = file[file.length - 1];
+                rules.push(file);
+            }
+    
+            if (!rules.length) console.log('No rules found.');
+            else {
+                console.log('Rules:');
+                rules.forEach(r => console.log('  ' + r));
+                console.log('');
+            }
+    
+            process.exit();
+        }
+    },
     install: {
         command: 'install',
         description: 'Run install script.',
@@ -145,7 +201,7 @@ const commands = {
         
         handler: () => {
             checkRoot();
-            require('child_process').execSync('bash ' + __dirname + '/install.sh', {stdio: 'inherit'});
+            exec('bash ' + __dirname + '/install.sh', {stdio: 'inherit'});
             process.exit();
         }
     }
@@ -158,7 +214,10 @@ yargs
     .demandCommand(1, 1, 'You must specify a command.', 'You must specify max one command.')
     .command(commands['add'])
     .command(commands['tpl'])
+    .command(commands['edit'])
     .command(commands['remove'])
+    .command(commands['get'])
+    .command(commands['list'])
     .command(commands['run'])
     .command(commands['reload'])
     .command(commands['install'])

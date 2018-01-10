@@ -21,6 +21,8 @@ const add = (rule, content) => {
         exec('chmod 600 ' + '/etc/iptables-manager/rules/' + rule, {stdio: 'inherit'});
         
         console.log('\nRules written to file: ' + '/etc/iptables-manager/rules/' + rule);
+        console.log('Execute the rule: ipm run ' + rule);
+        console.log('Reload all rules: ipm reload');
     } catch (e) {
         console.error(`Could not write to file: ${'/etc/iptables-manager/rules/' + rule}`);
         console.error(e.message);
