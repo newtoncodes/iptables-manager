@@ -8,7 +8,7 @@ const getIp = (str) => {
     if (!m) return false;
     
     return str;
-}
+};
 
 const getIface = (str) => {
     str = (str || '').toString().trim().toLowerCase();
@@ -16,7 +16,7 @@ const getIface = (str) => {
     if (!str.match(/^[a-z0-9]+$/)) return false;
     
     return str;
-}
+};
 
 let tpl = async (ask) => {
     let i = false;
@@ -39,7 +39,7 @@ iptables -A OUTPUT --sport 22 -p tcp -d ${s} -i ${i} -m state --state ESTABLISHE
 iptables -A INPUT  --dport 22 -p tcp -d ${d} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT --sport 22 -p tcp -s ${d} -m state --state ESTABLISHED     -j ACCEPT
 `;
-}
+};
 
 
 module.exports = tpl;

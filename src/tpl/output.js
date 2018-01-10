@@ -8,7 +8,7 @@ const getIp = (str) => {
     if (!m) return false;
     
     return str;
-}
+};
 
 const getPort = (str) => {
     str = (str || '').toString().trim();
@@ -46,7 +46,7 @@ const getPort = (str) => {
     if (left > 65535 || (right !== null && right > 65535)) return false;
     
     return [`${left}${right !== null ? `:${right}` : ''}`];
-}
+};
 
 const getIface = (str) => {
     str = (str || '').toString().trim().toLowerCase();
@@ -54,7 +54,7 @@ const getIface = (str) => {
     if (!str.match(/^[a-z0-9]+$/)) return false;
     
     return str;
-}
+};
 
 const getProto = (str) => {
     str = (str || '').toString().trim().toLowerCase();
@@ -62,7 +62,7 @@ const getProto = (str) => {
     if (str !== 'tcp' && str !== 'udp') return false;
     
     return str;
-}
+};
 
 let tplOne = async (ask) => {
     let ports = null;
@@ -89,7 +89,7 @@ iptables -A INPUT  --sport ${port}${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}`
     }
     
     return rule;
-}
+};
 
 let tpl = async (ask) => {
     let rule = await tplOne(ask);
@@ -107,7 +107,7 @@ let tpl = async (ask) => {
     }
     
     return rule;
-}
+};
 
 
 module.exports = tpl;

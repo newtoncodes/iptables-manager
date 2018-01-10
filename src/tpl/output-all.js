@@ -6,7 +6,7 @@ const getProto = (str) => {
     if (str !== 'tcp' && str !== 'udp') return false;
     
     return str;
-}
+};
 
 let tpl = async (ask) => {
     let proto = false;
@@ -18,7 +18,7 @@ let tpl = async (ask) => {
 iptables -A OUTPUT${proto ? ` -p ${proto}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT ${proto ? ` -p ${proto}` : ''} -m state --state ESTABLISHED     -j ACCEPT
 `;
-}
+};
 
 
 module.exports = tpl;

@@ -47,8 +47,8 @@ sudo echo "#!/bin/bash
 # Allow all traffic
 # REMOVE THIS RULE FILE WHEN YOU'RE DONE SETTING UP IPTABLES MANAGER.
 
-iptables -A INPUT  -p tcp -j ACCEPT
-iptables -A OUTPUT -p tcp -j ACCEPT
+iptables -A INPUT  -j ACCEPT
+iptables -A OUTPUT -j ACCEPT
 " > /etc/iptables-manager/rules/all-default
 
 echo "All done."
