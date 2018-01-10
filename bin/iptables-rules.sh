@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PATH_CONFIG=$1
+PATH_CONFIG=/etc/iptables-manager
 
 if [ ! -d ${PATH_CONFIG} ]; then
     echo "Directory $PATH_CONFIG does not exist."

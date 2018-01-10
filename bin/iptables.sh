@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PATH_CONFIG=$1
+PATH_CONFIG=/etc/iptables-manager
 
 if [ ! -d ${PATH_CONFIG} ]; then
     echo "Directory $PATH_CONFIG does not exist."
@@ -16,10 +16,12 @@ POLICY_OUTPUT=${POLICY_OUTPUT:-DROP}
 POLICY_FORWARD=${POLICY_FORWARD:-DROP}
 LOG_SPAM=${LOG_SPAM:-1}
 
-echo "POLICY_INPUT $POLICY_INPUT"
-echo "POLICY_OUTPUT $POLICY_OUTPUT"
-echo "POLICY_FORWARD $POLICY_FORWARD"
-echo "LOG_SPAM $LOG_SPAM"
+echo "POLICY_INPUT   = $POLICY_INPUT"
+echo "POLICY_OUTPUT  = $POLICY_OUTPUT"
+echo "POLICY_FORWARD = $POLICY_FORWARD"
+echo ""
+echo "LOG_SPAM       = $LOG_SPAM"
+echo ""
 
 set -e
 

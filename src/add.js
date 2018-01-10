@@ -8,23 +8,21 @@ const readFile = require('fs').readFileSync;
 const writeFile = require('fs').writeFileSync;
 const readline = require('readline');
 
-const PATH = __dirname + '/../config';
-
 
 const add = (rule, content) => {
-    if (exists(PATH + '/rules/' + rule)) {
+    if (exists('/etc/iptables-manager/rules/' + rule)) {
         console.error(`Rule ${rule} already exists.`);
         process.exit(1);
     }
     
     try {
-        if (!exists(PATH + '/rules/')) mkdir(PATH + '/rules');
-        writeFile(PATH + '/rules/' + rule, content.trim() + '\n', 'utf8');
-        exec('chmod 600 ' + PATH + '/rules/' + rule, {stdio: 'inherit'});
+        if (!exists('/etc/iptables-manager/rules/')) mkdir('/etc/iptables-manager/rules');
+        writeFile('/etc/iptables-manager/rules/' + rule, content.trim() + '\n', 'utf8');
+        exec('chmod 600 ' + '/etc/iptables-manager/rules/' + rule, {stdio: 'inherit'});
         
-        console.log('\nRules written to file: ' + PATH + '/rules/' + rule);
+        console.log('\nRules written to file: ' + '/etc/iptables-manager/rules/' + rule);
     } catch (e) {
-        console.error(`Could not write to file: ${PATH + '/rules/' + rule}`);
+        console.error(`Could not write to file: ${'/etc/iptables-manager/rules/' + rule}`);
         console.error(e.message);
         process.exit(1);
     }
@@ -32,7 +30,7 @@ const add = (rule, content) => {
 
 module.exports = {
     add: (rule, file, callback) => {
-        if (exists(PATH + '/rules/' + rule)) {
+        if (exists('/etc/iptables-manager/rules/' + rule)) {
             console.error(`Rule ${rule} already exists.`);
             process.exit(1);
         }
@@ -63,7 +61,7 @@ module.exports = {
     },
     
     tpl: (rule, tpl, callback) => {
-        if (exists(PATH + '/rules/' + rule)) {
+        if (exists('/etc/iptables-manager/rules/' + rule)) {
             console.error(`Rule ${rule} already exists.`);
             process.exit(1);
         }
