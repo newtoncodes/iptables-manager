@@ -8,7 +8,14 @@ PATH_CONFIG=/etc/iptables-manager
 
 sudo cp -f ${dir}/init.sh /etc/init.d/iptables-manager
 sudo chmod +x /etc/init.d/iptables-manager
-sudo update-rc.d iptables-manager defaults
+
+res=$(which chkconfig)
+if [ "$res" != "" ]; then
+    sudo chkconfig --add myscript
+    sudo chkconfig --level 2345 myscript on
+else
+    sudo update-rc.d iptables-manager defaults
+fi
 
 if [ ! -d ${PATH_CONFIG} ]; then
     sudo mkdir -p ${PATH_CONFIG}
