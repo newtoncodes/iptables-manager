@@ -140,10 +140,11 @@ const commands = {
         }
     },
     edit: {
-        command: 'edit',
+        command: 'edit <rule>',
         description: 'Edit a rule script with nano.',
-        
-        builder: (yargs) => yargs,
+    
+        builder: (yargs) => yargs
+            .positional('rule', options.rule),
         
         handler: (yargs) => {
             checkRoot();
@@ -153,10 +154,11 @@ const commands = {
         }
     },
     get: {
-        command: 'get',
+        command: 'get <rule>',
         description: 'Show a rule script.',
-        
-        builder: (yargs) => yargs,
+    
+        builder: (yargs) => yargs
+            .positional('rule', options.rule),
         
         handler: (yargs) => {
             checkRoot();
