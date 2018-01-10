@@ -9,7 +9,7 @@ const PATH = __dirname + '/../config';
 module.exports = (rule) => {
     if (!rule) {
         try {
-            exec(`bash ${__dirname + '/../bin/iptables-rules.sh'} "${PATH}"`);
+            exec(`bash ${__dirname + '/../bin/iptables-rules.sh'} "${PATH}"`, {stdio: 'inherit'});
         } catch (e) {
             console.log('');
             process.exit(1);
@@ -23,5 +23,5 @@ module.exports = (rule) => {
         process.exit(1);
     }
     
-    exec(`bash ${PATH + '/rules/' + rule} "${PATH}"`);
+    exec(`bash ${PATH + '/rules/' + rule} "${PATH}"`, {stdio: 'inherit'});
 };

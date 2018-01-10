@@ -13,4 +13,5 @@ module.exports = (rule) => {
     }
     
     unlink(PATH + '/rules/' + rule);
+    console.log('Rule deleted.\nThis does not immediately take effect. You have to reload in order to remove a rule.');
 };

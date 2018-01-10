@@ -2,8 +2,6 @@
 
 PATH_CONFIG=$1
 
-echo "PATH_CONFIG $PATH_CONFIG"
-
 if [ ! -d ${PATH_CONFIG} ]; then
     echo "Directory $PATH_CONFIG does not exist."
     exit 1;
