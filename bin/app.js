@@ -146,10 +146,12 @@ const commands = {
         builder: (yargs) => yargs
             .positional('rule', options.rule),
         
-        handler: (yargs) => {
+        handler: (argv) => {
             checkRoot();
             checkInstall();
-            exec('nano /etc/iptables-manager/' + yargs.rule, {stdio: 'inherit'});
+            try {
+                exec('nano /etc/iptables-manager/rules/' + argv.rule, {stdio: 'inherit'});
+            } catch (e) {}
             process.exit();
         }
     },
@@ -160,10 +162,12 @@ const commands = {
         builder: (yargs) => yargs
             .positional('rule', options.rule),
         
-        handler: (yargs) => {
+        handler: (argv) => {
             checkRoot();
             checkInstall();
-            exec('cat /etc/iptables-manager/' + yargs.rule, {stdio: 'inherit'});
+            try {
+                exec('cat /etc/iptables-manager/rules/' + argv.rule, {stdio: 'inherit'});
+            } catch (e) {}
             process.exit();
         }
     },
