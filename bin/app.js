@@ -3,6 +3,9 @@
 'use strict';
 
 const yargs = require('yargs');
+const exists = require('fs').existsSync;
+const access = require('fs').accessSync;
+const W_OK = require('fs').W_OK;
 
 const add = require('../src/add').add;
 const tpl = require('../src/add').tpl;
@@ -10,6 +13,21 @@ const remove = require('../src/remove');
 const run = require('../src/run');
 const reload = require('../src/reload');
 
+const checkInstall = () => {
+    if (!exists('/etc/iptables-manager/rules') || !exists('/etc/iptables-manager/vars.env')) {
+        console.error(`Please run ipm install.`);
+        process.exit(1);
+    }
+};
+
+const checkRoot = () => {
+    try {
+        access('/etc/iptables-manager/rules', W_OK);
+    } catch (e) {
+        console.error('Please run as root or use sudo.');
+        process.exit(1);
+    }
+};
 
 const options = {
     rule: {
@@ -59,6 +77,8 @@ const commands = {
             .positional('file', options.file),
         
         handler: (argv) => {
+            checkRoot();
+            checkInstall();
             add(argv.rule, argv.file, () => process.exit());
         }
     },
@@ -71,6 +91,8 @@ const commands = {
             .positional('tpl', options.tpl),
         
         handler: (argv) => {
+            checkRoot();
+            checkInstall();
             tpl(argv.rule, argv.tpl, () => process.exit());
         }
     },
@@ -82,6 +104,8 @@ const commands = {
             .positional('rule', options.rule),
     
         handler: (argv) => {
+            checkRoot();
+            checkInstall();
             remove(argv.rule);
             process.exit();
         }
@@ -94,6 +118,8 @@ const commands = {
             .positional('rule', options.rule),
     
         handler: (argv) => {
+            checkRoot();
+            checkInstall();
             run(argv.rule);
             process.exit();
         }
@@ -101,11 +127,25 @@ const commands = {
     reload: {
         command: 'reload',
         description: 'Reload all rules.',
-    
+        
         builder: (yargs) => yargs,
-    
+        
         handler: () => {
+            checkRoot();
+            checkInstall();
             reload();
+            process.exit();
+        }
+    },
+    install: {
+        command: 'install',
+        description: 'Run install script.',
+        
+        builder: (yargs) => yargs,
+        
+        handler: () => {
+            checkRoot();
+            require('child_process').execSync('bash ' + __dirname + '/install.sh', {stdio: 'inherit'});
             process.exit();
         }
     }
@@ -121,6 +161,7 @@ yargs
     .command(commands['remove'])
     .command(commands['run'])
     .command(commands['reload'])
+    .command(commands['install'])
     .help();
 
 if (!commands[yargs.argv['_'][0]]) {

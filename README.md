@@ -2,7 +2,7 @@
 
 Manage iptables easier. Just simple bash scripts.
 
-The best feature of iptables manager is the templates. Just type: `ipm tpl RULE_NAME input` and it will ask you everything you need 99.9% of the time.
+The best feature of iptables manager is the templates. Just type: `sudo ipm tpl RULE_NAME input` and it will ask you everything you need 99.9% of the time.
 Or type `ipm tpl --help` to get a list of all templates.
 
 - Basic policies are saved in **/etc/iptables/manager/vars.env**.
@@ -31,12 +31,15 @@ On install, a basic rule will be added to allow all tcp traffic, otherwise you w
 out of the server, if you are using ssh, vnc or anything like that.
 After you setup your ssh rules, you must delete the all-default rule.
 ```bash
-ipm remove all-default
+sudo ipm remove all-default
 ```
 
 ## Usage
 
 ```
+ipm --help # If the ipm command is used, use iptables-manager
+iptables-manager --help
+
 Usage: ipm <cmd> <args ...>
 
 Commands:
@@ -51,7 +54,7 @@ Options:
   --help     Show help  [boolean]
 ```
 
-- `ipm add` can be used with pipe like `cat file.sh | ipm add RULE_NAME` or `ipm add RULE_NAME < file.sh`.
+- `ipm add` can be used with pipe like `cat file.sh | sudo ipm add RULE_NAME` or `sudo ipm add RULE_NAME < file.sh`.
 - `ipm add` should only be used if you really need custom things or you want to use ipm as an API for another app. In most cases just use `ipm tpl`.
 - `ipm tpl` can add multiple rules with one command in one rule file.
 - **Read the stdout carefully and you should be OK.**
@@ -64,9 +67,29 @@ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -; sudo apt-get ins
 
 ## Install iptables-manager
 
+**If you are installing as root:**
+
 ```bash
-npm install iptables-manager
-ipm --help # If the ipm command is used, use iptables-manager
+npm install --unsafe-perm iptables-manager
 ```
 
-TODO: sudo everywhere
+For normal users:
+
+```bash
+npm install iptables-manager
+```
+
+The install script will install the required directory structure. If you don't see: `All done.` or
+`Configs already exist.`, you will need to run `ipm install` later. To check if install is ok, run:
+```bash
+cat /etc/iptables-manager/vars.env
+```
+And you should see something like:
+```bash
+POLICY_INPUT=DROP
+POLICY_OUTPUT=DROP
+POLICY_FORWARD=DROP
+
+LOG_SPAM=1
+```
+
