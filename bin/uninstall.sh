@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+res=$(which chkconfig)
+
 set -e
 
-res=$(which chkconfig)
 if [ "$res" != "" ]; then
     sudo chkconfig --del iptables-manager
 else
