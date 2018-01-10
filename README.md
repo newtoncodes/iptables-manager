@@ -68,3 +68,5 @@ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -; sudo apt-get ins
 npm install iptables-manager
 ipm --help # If the ipm command is used, use iptables-manager
 ```
+
+TODO: sudo everywhere

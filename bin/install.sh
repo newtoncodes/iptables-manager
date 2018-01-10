@@ -38,3 +38,12 @@ LOG_SPAM=1
 " > /etc/iptables-manager/vars.env
 
 sudo mkdir -p /etc/iptables-manager/rules
+
+sudo echo "#!/bin/bash
+
+# Allow all traffic
+# REMOVE THIS RULE FILE WHEN YOU'RE DONE SETTING UP IPTABLES MANAGER.
+
+iptables -A INPUT  -p tcp -j ACCEPT
+iptables -A OUTPUT -p tcp -j ACCEPT
+" > /etc/iptables-manager/rules/all-default
