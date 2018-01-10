@@ -29,11 +29,13 @@ let tpl = async (ask) => {
     while (!d) d = getIp(await ask('VPN IP - the server\'s address within the VPN: '));
     
     return `
-# Root IP
+# SSH over VPN
+
+## Root IP
 iptables -A INPUT  --dport 22 -p tcp -s ${s} -i ${i} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT --sport 22 -p tcp -d ${s} -i ${i} -m state --state ESTABLISHED     -j ACCEPT
 
-# VPN IP
+## VPN IP
 iptables -A INPUT  --dport 22 -p tcp -d ${d} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT --sport 22 -p tcp -s ${d} -m state --state ESTABLISHED     -j ACCEPT
 `;

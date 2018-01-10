@@ -31,11 +31,15 @@ let tpl = async (ask) => {
     while (d === false) d = getIp(await ask('Destination IP - the server address (used instead of network interface) [default: any]: '));
     
     let rule = `
+# HTTP server
+
+## HTTP
 iptables -A INPUT  --dport 80 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT --sport 80 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
 `;
     
     if (https) rule += `
+## HTTPS
 iptables -A INPUT  --dport 443 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT --sport 443 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
 `;

@@ -27,10 +27,10 @@ let tpl = async (ask) => {
     while (d === false) d = getIp(await ask('Destination IP - the server address (used instead of network interface) [default: any]: '));
     
     return `
-# DNS server
+# SSH server
 
-iptables -A INPUT  --dport 53 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 53 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  --dport 22 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT --sport 22 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
 `;
 }
 
