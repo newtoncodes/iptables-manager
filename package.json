@@ -6,8 +6,8 @@
     "yargs": "=10.0.3"
   },
   "scripts": {
-    "postinstall": "bash ./bin/install.sh",
-    "preuninstall": "bash ./bin/uninstall.sh"
+    "install": "bash ./bin/install.sh",
+    "uninstall": "bash ./bin/uninstall.sh"
   },
   "bin": {
     "iptables-manager": "node ./bin/app.js",
