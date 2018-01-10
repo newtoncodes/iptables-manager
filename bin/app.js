@@ -22,7 +22,7 @@ const checkInstall = () => {
 
 const checkRoot = () => {
     try {
-        access('/etc/iptables-manager/rules', W_OK);
+        access('/etc', W_OK);
     } catch (e) {
         console.error('Please run as root or use sudo.');
         process.exit(1);
