@@ -5,9 +5,12 @@
     "read-input": "^0.3.1",
     "yargs": "=10.0.3"
   },
+  "config": {
+    "unsafe-perm": true
+  },
   "scripts": {
-    "install": "bash ./bin/install.sh",
-    "uninstall": "bash ./bin/uninstall.sh"
+    "postinstall": "bash ./bin/install.sh",
+    "preuninstall": "bash ./bin/uninstall.sh"
   },
   "bin": {
     "iptables-manager": "node ./bin/app.js",
