@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Installing..."
+
 set -e
 
 dir=$(dirname "$0")
@@ -26,6 +28,7 @@ if [ ! -d /etc/iptables-manager ]; then
 fi
 
 if [ -f /etc/iptables-manager/vars.env ]; then
+    echo "Configs already exist."
     exit 0;
 fi
 
@@ -47,3 +50,5 @@ sudo echo "#!/bin/bash
 iptables -A INPUT  -p tcp -j ACCEPT
 iptables -A OUTPUT -p tcp -j ACCEPT
 " > /etc/iptables-manager/rules/all-default
+
+echo "All done."
