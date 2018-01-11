@@ -50,9 +50,13 @@ Usage: ipm <cmd> <args ...>
 Commands:
   ipm add <rule> [file]  Add a rule from a file or stdin.
   ipm tpl <rule> <tpl>   Add a rule from a template.
+  ipm edit <rule>        Edit a rule script with nano.
   ipm remove <rule>      Remove a rule (requires reload).
+  ipm get <rule>         Show a rule script.
+  ipm list               List all rules.
   ipm run [rule]         Run a single rule or all rules.
   ipm reload             Reload all rules.
+  ipm install            Run install script.
 
 Options:
   --version  Show version number  [boolean]
