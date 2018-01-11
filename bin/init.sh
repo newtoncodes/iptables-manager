@@ -10,15 +10,12 @@
 ### END INIT INFO
 
 start() {
-    touch /tmp/iptables-manager-running
     iptables-manager reload
 }
 
 stop() {
     echo "IPtables manager doesn't stop, because it doesn't really run anything."
-    echo "It will just not execute the next system restart."
-
-    rm -rf /tmp/iptables-manager-running
+    echo "If you don't want to have iptables reload every boot, uninstall iptables-manager."
 }
 
 case "$1" in
@@ -33,11 +30,7 @@ case "$1" in
        start
        ;;
     status)
-        if [ -f /tmp/iptables-manager-running ]; then
-            echo "IPtables manager is enabled."
-        else
-            echo "IPtables manager is disabled."
-        fi
+        echo "IPtables manager is enabled."
        ;;
     *)
        echo "Usage: $0 {start|stop|status|restart}"
