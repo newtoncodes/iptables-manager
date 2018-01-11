@@ -1,20 +1,16 @@
 {
   "name": "iptables-manager",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "dependencies": {
     "read-input": "^0.3.1",
     "yargs": "=10.0.3"
-  },
-  "config": {
-    "unsafe-perm": true
   },
   "scripts": {
     "postinstall": "bash ./bin/install.sh",
     "preuninstall": "bash ./bin/uninstall.sh"
   },
   "bin": {
-    "iptables-manager": "node ./bin/app.js",
-    "firewall": "node ./bin/app.js",
-    "ipm": "node ./bin/app.js"
+    "iptables-manager": "bin/app.js",
+    "ipm": "bin/app.js"
   }
 }

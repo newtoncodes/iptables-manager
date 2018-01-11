@@ -75,13 +75,13 @@ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -; sudo apt-get ins
 **If you are installing as root:**
 
 ```bash
-npm install --unsafe-perm iptables-manager
+npm install -g --unsafe-perm iptables-manager
 ```
 
 For normal users:
 
 ```bash
-npm install iptables-manager
+npm install -g iptables-manager
 ```
 
 The install script will install the required directory structure. If you don't see: `All done.` or
