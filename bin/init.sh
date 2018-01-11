@@ -15,7 +15,7 @@ start() {
 
 stop() {
     echo "IPtables manager doesn't stop, because it doesn't really run anything."
-    echo "If you don't want to have iptables reload every boot, uninstall iptables-manager."
+    echo "If you don't want to have iptables reload every boot, disable the service or uninstall iptables-manager."
 }
 
 case "$1" in
