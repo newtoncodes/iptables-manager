@@ -1,6 +1,21 @@
 {
   "name": "iptables-manager",
-  "version": "1.1.3",
+  "version": "1.1.4",
+  "description": "Easy to use CLI iptables manager. Built-in templates for easy management. Scripts persist on system reboot.",
+  "keywords": [
+    "iptables",
+    "firewall"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/newtoncodes/iptables-manager"
+  },
+  "bugs": {
+    "url": "https://github.com/newtoncodes/iptables-manager"
+  },
+  "homepage": "https://github.com/newtoncodes/iptables-manager",
+  "author": "Christian Nikolov <christian@newton.codes> (https://github.com/newtoncodes)",
+  "license": "MIT",
   "dependencies": {
     "read-input": "^0.3.1",
     "yargs": "=10.0.3"
