@@ -17,8 +17,8 @@ res=$(which chkconfig)
 set -e
 
 if [ "$res" != "" ]; then
-    sudo chkconfig --add myscript
-    sudo chkconfig --level 2345 myscript on
+    sudo chkconfig --add iptables-manager
+    sudo chkconfig --level 2345 iptables-manager on
 else
     sudo update-rc.d iptables-manager defaults
 fi
