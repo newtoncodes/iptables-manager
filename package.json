@@ -1,6 +1,6 @@
 {
   "name": "iptables-manager",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Easy to use CLI iptables manager. Built-in templates for easy management. Scripts persist on system reboot.",
   "keywords": [
     "iptables",

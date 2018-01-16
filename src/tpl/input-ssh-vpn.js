@@ -33,7 +33,7 @@ let tpl = async (ask) => {
 
 ## Root IP
 iptables -A INPUT  -p tcp -s ${s} -i ${i} --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp -d ${s} -i ${i} --sport 22 -m state --state ESTABLISHED     -j ACCEPT
+iptables -A OUTPUT -p tcp -d ${s} --sport 22 -m state --state ESTABLISHED     -j ACCEPT
 
 ## VPN IP
 iptables -A INPUT  -p tcp -d ${d} --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT

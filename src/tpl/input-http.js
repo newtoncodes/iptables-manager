@@ -25,23 +25,23 @@ let tpl = async (ask) => {
     https = (!https || https === 'yes');
     
     let i = false;
-    while (i === false) i = getIface(await ask('Network interface - eth0/tun0/etc... (used instead of destination ip) [default: any]: '));
+    while (i === false) i = getIface(await ask('Network interface - eth0/tun0/etc... (used only for input) [default: any]: '));
     
     let d = false;
-    while (d === false) d = getIp(await ask('Destination IP - the server address (used instead of network interface) [default: any]: '));
+    while (d === false) d = getIp(await ask('Destination IP - the server address (used both for input and output) [default: any]: '));
     
     let rule = `
 # HTTP server
 
 ## HTTP
 iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 80 -m state --state ESTABLISHED     -j ACCEPT
+iptables -A OUTPUT -p tcp${d ? ` -s ${d}` : ''} --sport 80 -m state --state ESTABLISHED     -j ACCEPT
 `;
     
     if (https) rule += `
 ## HTTPS
 iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 443 -m state --state ESTABLISHED     -j ACCEPT
+iptables -A OUTPUT -p tcp${d ? ` -s ${d}` : ''} --sport 443 -m state --state ESTABLISHED     -j ACCEPT
 `;
     
     return rule;

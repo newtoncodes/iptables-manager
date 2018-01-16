@@ -71,11 +71,8 @@ let tplOne = async (ask) => {
     let proto = false;
     while (proto === false) proto = getProto(await ask('Protocol [options: tcp, udp, any; default: any]: '));
     
-    let i = false;
-    while (i === false) i = getIface(await ask('Network interface - eth0/tun0/etc... (used instead of source ip) [default: any]: '));
-    
     let s = false;
-    while (s === false) s = getIp(await ask('Source IP - the server address (used instead of network interface) [default: any]: '));
+    while (s === false) s = getIp(await ask('Source IP - the server address (used both for input and output) [default: any]: '));
     
     let d = false;
     while (d === false) d = getIp(await ask('Destination IP - the external address [default: any]: '));
@@ -83,8 +80,8 @@ let tplOne = async (ask) => {
     let rule = '# Custom rules\n';
     for (let port of ports) {
         rule += `
-iptables -A OUTPUT --dport ${port}${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -s ${s}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT  --sport ${port}${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -d ${s}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A OUTPUT --dport ${port}${proto ? ` -p ${proto}` : ''}${s ? ` -s ${s}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT  --sport ${port}${proto ? ` -p ${proto}` : ''}${s ? ` -d ${s}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
 `;
     }
     
