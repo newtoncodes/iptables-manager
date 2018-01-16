@@ -58,7 +58,7 @@ const getIface = (str) => {
 
 const getProto = (str) => {
     str = (str || '').toString().trim().toLowerCase();
-    if (!str || str === 'any') return null;
+    // if (!str || str === 'any') return null;
     if (str !== 'tcp' && str !== 'udp') return false;
     
     return str;
@@ -69,7 +69,7 @@ let tplOne = async (ask) => {
     while (!ports) ports = getPort(await ask('Port [format: 1024; 1024,4048,8096; 1024:65535]: '));
     
     let proto = false;
-    while (proto === false) proto = getProto(await ask('Protocol [options: tcp, udp, any; default: any]: '));
+    while (proto === false) proto = getProto(await ask('Protocol [options: tcp, udp; default: tcp]: '));
     
     let i = false;
     while (i === false) i = getIface(await ask('Network interface - eth0/tun0/etc... (used instead of destination ip) [default: any]: '));
@@ -83,8 +83,8 @@ let tplOne = async (ask) => {
     let rule = '# Custom rules\n';
     for (let port of ports) {
         rule += `
-iptables -A INPUT  --dport ${port}${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -s ${s}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport ${port}${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -d ${s}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  ${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -s ${s}` : ''}${d ? ` -d ${d}` : ''} --dport ${port} -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT ${proto ? ` -p ${proto}` : ''}${i ? ` -i ${i}` : ''}${s ? ` -d ${s}` : ''}${d ? ` -s ${d}` : ''} --sport ${port} -m state --state ESTABLISHED     -j ACCEPT
 `;
     }
     

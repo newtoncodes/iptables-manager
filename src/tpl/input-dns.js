@@ -29,8 +29,8 @@ let tpl = async (ask) => {
     return `
 # DNS server
 
-iptables -A INPUT  --dport 53 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 53 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 53 -m state --state ESTABLISHED     -j ACCEPT
 `;
 };
 

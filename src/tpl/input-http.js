@@ -34,14 +34,14 @@ let tpl = async (ask) => {
 # HTTP server
 
 ## HTTP
-iptables -A INPUT  --dport 80 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 80 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 80 -m state --state ESTABLISHED     -j ACCEPT
 `;
     
     if (https) rule += `
 ## HTTPS
-iptables -A INPUT  --dport 443 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 443 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 443 -m state --state ESTABLISHED     -j ACCEPT
 `;
     
     return rule;

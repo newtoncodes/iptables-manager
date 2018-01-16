@@ -32,12 +32,12 @@ let tpl = async (ask) => {
 # SSH over VPN
 
 ## Root IP
-iptables -A INPUT  --dport 22 -p tcp -s ${s} -i ${i} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 22 -p tcp -d ${s} -i ${i} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp -s ${s} -i ${i} --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp -d ${s} -i ${i} --sport 22 -m state --state ESTABLISHED     -j ACCEPT
 
 ## VPN IP
-iptables -A INPUT  --dport 22 -p tcp -d ${d} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 22 -p tcp -s ${d} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp -d ${d} --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp -s ${d} --sport 22 -m state --state ESTABLISHED     -j ACCEPT
 `;
 };
 

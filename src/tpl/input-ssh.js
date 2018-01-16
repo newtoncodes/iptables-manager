@@ -29,8 +29,8 @@ let tpl = async (ask) => {
     return `
 # SSH server
 
-iptables -A INPUT  --dport 22 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT --sport 22 -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} -m state --state ESTABLISHED     -j ACCEPT
+iptables -A INPUT  -p tcp${i ? ` -i ${i}` : ''}${d ? ` -d ${d}` : ''} --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp${i ? ` -i ${i}` : ''}${d ? ` -s ${d}` : ''} --sport 22 -m state --state ESTABLISHED     -j ACCEPT
 `;
 };
 
